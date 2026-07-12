@@ -1,98 +1,433 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  Image,
+} from "react-native";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+const Colors = {
+  primary: '#3B82F6', // Blue color used in the design
+  background: '#F9FAFB', 
+  card: '#FFFFFF',
+  text: '#111827',
+  textSecondary: '#6B7280',
+  border: '#E5E7EB',
+  cyan: '#06B6D4',
+};
+
+const ProductCard = ({ title, subtitle, capacity, read, write, score, price, badgeType, badgeText, imageSource }) => (
+  <View style={styles.cardContainer}>
+    <View style={styles.imageContainer}>
+      {imageSource ? (
+        <Image source={imageSource} style={styles.productImage} resizeMode="cover" />
+      ) : (
+        <View style={styles.placeholderImage}>
+          <Text style={styles.placeholderText}>SSD Image</Text>
+        </View>
+      )}
+      {badgeType === 'new' && (
+        <View style={styles.badgeNew}>
+          <Text style={styles.badgeNewText}>{badgeText}</Text>
+        </View>
+      )}
+      {badgeType === 'bestseller' && (
+        <View style={styles.badgeBest}>
+          <Text style={styles.badgeBestText}>{badgeText}</Text>
+        </View>
+      )}
+    </View>
+
+    <View style={styles.cardBody}>
+      <Text style={styles.cardTitle}>{title}</Text>
+      <Text style={styles.cardSubtitle}>{subtitle}</Text>
+
+      <View style={styles.specsContainer}>
+        <View style={styles.specRow}>
+          <Text style={styles.specLabel}>Capacity</Text>
+          <Text style={styles.specValue}>{capacity}</Text>
+        </View>
+        <View style={styles.specRow}>
+          <Text style={styles.specLabel}>Read Speed</Text>
+          <Text style={styles.specValue}>{read}</Text>
+        </View>
+        <View style={styles.specRow}>
+          <Text style={styles.specLabel}>Write Speed</Text>
+          <Text style={styles.specValue}>{write}</Text>
+        </View>
+      </View>
+
+      <View style={styles.performanceContainer}>
+        <View style={styles.perfHeader}>
+          <Text style={styles.specLabel}>Performance Index</Text>
+          <Text style={styles.perfScore}>{score}</Text>
+        </View>
+        <View style={styles.progressBarBg}>
+          <View style={[styles.progressBarFill, { width: '98%' }]} />
+        </View>
+      </View>
+
+      <View style={styles.cardFooter}>
+        <Text style={styles.price}>{price}</Text>
+        <TouchableOpacity style={styles.addToCartBtn}>
+          <Text style={styles.cartIcon}>🛒</Text>
+          <Text style={styles.addToCartText}>Add to Cart</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </View>
+);
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const [activeTag, setActiveTag] = useState('All Drives');
+  const tags = ['All Drives', 'NVMe Gen5', 'NVMe Gen4', 'SATA SSD'];
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor={Colors.background} />
+      
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.menuButton}>
+          <Text style={styles.menuIcon}>☰</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>CUTE BOY SHOP</Text>
+        <View style={{ width: 30 }} />
+      </View>
+
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+        <Text style={styles.pageTitle}>Solid State Drives</Text>
+
+        {/* Search */}
+        <View style={styles.searchContainer}>
+          <Text style={styles.searchIcon}>🔍</Text>
+          <TextInput 
+            style={styles.searchInput}
+            placeholder="Search models, specs..."
+            placeholderTextColor={Colors.textSecondary}
+          />
+        </View>
+
+        {/* Tags */}
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tagsScroll} contentContainerStyle={styles.tagsContainer}>
+          {tags.map((tag) => (
+            <TouchableOpacity 
+              key={tag} 
+              style={[styles.tag, activeTag === tag && styles.activeTag]}
+              onPress={() => setActiveTag(tag)}
+            >
+              <Text style={[styles.tagText, activeTag === tag && styles.activeTagText]}>{tag}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+
+        {/* Product Cards */}
+        <ProductCard 
+          title="Velocity X1 Pro NVMe"
+          subtitle="Gen5 ×4 M.2 2280"
+          capacity="2TB"
+          read="14,000 MB/s"
+          write="12,000 MB/s"
+          score="98/100"
+          price="$349.99"
+          badgeType="new"
+          badgeText="NEW"
+          imageSource={require('../../assets/images/ALL_catalog_blog_23F14_UaIpxOZhe9.jpg')}
+        />
+        
+        <ProductCard 
+          title="Velocity X1 Pro NVMe"
+          subtitle="Gen4 ×4 M.2 2280"
+          capacity="1TB"
+          read="7,000 MB/s"
+          write="6,000 MB/s"
+          score="85/100"
+          price="$149.99"
+          badgeType="bestseller"
+          badgeText="BEST SELLER"
+          imageSource={require('../../assets/images/images.jpg')}
+        />
+      </ScrollView>
+
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity style={styles.navItem}>
+          <Text style={[styles.navIcon, { color: Colors.primary }]}>🛍️</Text>
+          <Text style={[styles.navText, { color: Colors.primary }]}>Shop</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem}>
+          <Text style={styles.navIcon}>🔍</Text>
+          <Text style={styles.navText}>Search</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem}>
+          <Text style={styles.navIcon}>📋</Text>
+          <Text style={styles.navText}>Orders</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem}>
+          <Text style={styles.navIcon}>👤</Text>
+          <Text style={styles.navText}>Profile</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
+    backgroundColor: Colors.background,
   },
-  stepContainer: {
-    gap: 8,
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+  },
+  menuButton: {
+    width: 30,
+    height: 30,
+    justifyContent: "center",
+  },
+  menuIcon: {
+    fontSize: 24,
+    color: '#9CA3AF',
+  },
+  headerTitle: {
+    fontSize: 16,
+    fontWeight: "800",
+    color: Colors.primary,
+    letterSpacing: 1,
+  },
+  scrollContent: {
+    paddingBottom: 20,
+  },
+  pageTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: Colors.text,
+    textAlign: "center",
+    marginVertical: 10,
+  },
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginHorizontal: 20,
+    marginTop: 10,
+    marginBottom: 20,
+    paddingHorizontal: 15,
+    height: 48,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: Colors.primary,
+    backgroundColor: Colors.card,
+  },
+  searchIcon: {
+    fontSize: 18,
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+    color: Colors.text,
+  },
+  tagsScroll: {
+    marginBottom: 20,
+  },
+  tagsContainer: {
+    paddingHorizontal: 20,
+    gap: 10,
+  },
+  tag: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    backgroundColor: Colors.card,
+    marginRight: 10,
+  },
+  activeTag: {
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primary,
+  },
+  tagText: {
+    fontSize: 14,
+    color: Colors.textSecondary,
+    fontWeight: "500",
+  },
+  activeTagText: {
+    color: "#FFFFFF",
+  },
+  cardContainer: {
+    backgroundColor: Colors.card,
+    marginHorizontal: 20,
+    marginBottom: 20,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    overflow: "hidden",
+  },
+  imageContainer: {
+    height: 180,
+    backgroundColor: '#374151',
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  productImage: {
+    width: '100%',
+    height: '100%',
+  },
+  placeholderImage: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#2D3748', // Dark background like in design
+  },
+  placeholderText: {
+    color: '#A0AEC0',
+    fontSize: 16,
+  },
+  badgeNew: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    backgroundColor: Colors.primary,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderBottomLeftRadius: 8,
+  },
+  badgeNewText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  badgeBest: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    backgroundColor: '#D1D5DB',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderBottomLeftRadius: 8,
+  },
+  badgeBestText: {
+    color: '#374151',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  cardBody: {
+    padding: 20,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: Colors.text,
+    marginBottom: 4,
+  },
+  cardSubtitle: {
+    fontSize: 14,
+    color: Colors.textSecondary,
+    marginBottom: 16,
+  },
+  specsContainer: {
+    marginBottom: 16,
+  },
+  specRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  specLabel: {
+    fontSize: 14,
+    color: Colors.textSecondary,
+  },
+  specValue: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: Colors.text,
+  },
+  performanceContainer: {
+    marginBottom: 20,
+    borderTopWidth: 1,
+    borderTopColor: Colors.border,
+    paddingTop: 16,
+  },
+  perfHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  perfScore: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: Colors.cyan,
+  },
+  progressBarBg: {
+    height: 4,
+    backgroundColor: Colors.border,
+    borderRadius: 2,
+  },
+  progressBarFill: {
+    height: '100%',
+    backgroundColor: Colors.cyan,
+    borderRadius: 2,
+  },
+  cardFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  price: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: Colors.text,
+  },
+  addToCartBtn: {
+    flexDirection: 'row',
+    backgroundColor: Colors.primary,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  cartIcon: {
+    fontSize: 16,
+    color: 'white',
+    marginRight: 6,
+  },
+  addToCartText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  bottomNav: {
+    flexDirection: "row",
+    backgroundColor: Colors.card,
+    paddingVertical: 12,
+    borderTopWidth: 1,
+    borderTopColor: Colors.border,
+  },
+  navItem: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  navIcon: {
+    fontSize: 20,
+    color: '#9CA3AF',
+    marginBottom: 4,
+  },
+  navText: {
+    fontSize: 12,
+    color: '#9CA3AF',
+    fontWeight: "500",
   },
 });
