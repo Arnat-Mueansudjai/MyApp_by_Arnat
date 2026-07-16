@@ -1,0 +1,28 @@
+[
+  {
+    "id": "1",
+    "title": "Velocity X1 Pro NVMe",
+    "subtitle": "Gen5 ×4 M.2 2280",
+    "capacity": "2TB",
+    "read": "14,000 MB/s",
+    "write": "12,000 MB/s",
+    "score": "98/100",
+    "price": "$349.99",
+    "badgeType": "new",
+    "badgeText": "NEW",
+    "imageId": "product_1"
+  },
+  {
+    "id": "2",
+    "title": "Velocity X1 Pro NVMe",
+    "subtitle": "Gen4 ×4 M.2 2280",
+    "capacity": "1TB",
+    "read": "7,000 MB/s",
+    "write": "6,000 MB/s",
+    "score": "85/100",
+    "price": "$149.99",
+    "badgeType": "bestseller",
+    "badgeText": "BEST SELLER",
+    "imageId": "product_2"
+  }
+]

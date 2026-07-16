@@ -41,3 +41,23 @@ app-example
 # generated native folders
 /ios
 /android
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# AI Agents
+.claude/
+AGENTS.md
+CLAUDE.md
+
+# Error logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Misc
+*.log
+coverage/

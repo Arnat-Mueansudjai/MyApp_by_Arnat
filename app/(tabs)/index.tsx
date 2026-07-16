@@ -10,6 +10,12 @@ import {
   ScrollView,
   Image,
 } from "react-native";
+import productsData from "../../constants/products.json";
+
+const imageMap: Record<string, any> = {
+  "product_1": require("../../assets/images/ALL_catalog_blog_23F14_UaIpxOZhe9.jpg"),
+  "product_2": require("../../assets/images/images.jpg"),
+};
 
 const Colors = {
   primary: '#3B82F6', // Blue color used in the design
@@ -127,31 +133,21 @@ export default function HomeScreen() {
         </ScrollView>
 
         {/* Product Cards */}
-        <ProductCard 
-          title="Velocity X1 Pro NVMe"
-          subtitle="Gen5 ×4 M.2 2280"
-          capacity="2TB"
-          read="14,000 MB/s"
-          write="12,000 MB/s"
-          score="98/100"
-          price="$349.99"
-          badgeType="new"
-          badgeText="NEW"
-          imageSource={require('../../assets/images/ALL_catalog_blog_23F14_UaIpxOZhe9.jpg')}
-        />
-        
-        <ProductCard 
-          title="Velocity X1 Pro NVMe"
-          subtitle="Gen4 ×4 M.2 2280"
-          capacity="1TB"
-          read="7,000 MB/s"
-          write="6,000 MB/s"
-          score="85/100"
-          price="$149.99"
-          badgeType="bestseller"
-          badgeText="BEST SELLER"
-          imageSource={require('../../assets/images/images.jpg')}
-        />
+        {productsData.map((product) => (
+          <ProductCard 
+            key={product.id}
+            title={product.title}
+            subtitle={product.subtitle}
+            capacity={product.capacity}
+            read={product.read}
+            write={product.write}
+            score={product.score}
+            price={product.price}
+            badgeType={product.badgeType}
+            badgeText={product.badgeText}
+            imageSource={imageMap[product.imageId]}
+          />
+        ))}
       </ScrollView>
 
       {/* Bottom Navigation */}
