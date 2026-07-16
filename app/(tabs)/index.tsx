@@ -12,11 +12,6 @@ import {
 } from "react-native";
 import productsData from "../../constants/products.json";
 
-const imageMap: Record<string, any> = {
-  "product_1": require("../../assets/images/ALL_catalog_blog_23F14_UaIpxOZhe9.jpg"),
-  "product_2": require("../../assets/images/images.jpg"),
-};
-
 const Colors = {
   primary: '#3B82F6', // Blue color used in the design
   background: '#F9FAFB', 
@@ -27,11 +22,11 @@ const Colors = {
   cyan: '#06B6D4',
 };
 
-const ProductCard = ({ title, subtitle, capacity, read, write, score, price, badgeType, badgeText, imageSource }) => (
+const ProductCard = ({ title, subtitle, capacity, read, write, score, price, badgeType, badgeText, imageUrl }) => (
   <View style={styles.cardContainer}>
     <View style={styles.imageContainer}>
-      {imageSource ? (
-        <Image source={imageSource} style={styles.productImage} resizeMode="cover" />
+      {imageUrl ? (
+        <Image source={{ uri: imageUrl }} style={styles.productImage} resizeMode="cover" />
       ) : (
         <View style={styles.placeholderImage}>
           <Text style={styles.placeholderText}>SSD Image</Text>
@@ -145,7 +140,7 @@ export default function HomeScreen() {
             price={product.price}
             badgeType={product.badgeType}
             badgeText={product.badgeText}
-            imageSource={imageMap[product.imageId]}
+            imageUrl={product.imageUrl}
           />
         ))}
       </ScrollView>

@@ -10,7 +10,7 @@
     "price": "$349.99",
     "badgeType": "new",
     "badgeText": "NEW",
-    "imageId": "product_1"
+    "imageUrl": "https://i.postimg.cc/8js9hYtC/image1.jpg"
   },
   {
     "id": "2",
@@ -23,6 +23,45 @@
     "price": "$149.99",
     "badgeType": "bestseller",
     "badgeText": "BEST SELLER",
-    "imageId": "product_2"
+    "imageUrl": "https://i.postimg.cc/ZC02rQVW/image2.jpg"
+  },
+  {
+    "id": "3",
+    "title": "Samsung 990 PRO",
+    "subtitle": "Gen4 ×4 M.2 2280",
+    "capacity": "2TB",
+    "read": "7,450 MB/s",
+    "write": "6,900 MB/s",
+    "score": "92/100",
+    "price": "$179.99",
+    "badgeType": "hot",
+    "badgeText": "HOT",
+    "imageUrl": "https://i.postimg.cc/fVSykZFK/image3.webp"
+  },
+  {
+    "id": "4",
+    "title": "WD Black SN850X",
+    "subtitle": "Gen4 ×4 M.2 2280",
+    "capacity": "1TB",
+    "read": "7,300 MB/s",
+    "write": "6,300 MB/s",
+    "score": "89/100",
+    "price": "$119.99",
+    "badgeType": "sale",
+    "badgeText": "SALE",
+    "imageUrl": "https://i.postimg.cc/jDn2CK9c/image4.jpg"
+  },
+  {
+    "id": "5",
+    "title": "Crucial T700 NVMe",
+    "subtitle": "Gen5 ×4 M.2 2280",
+    "capacity": "4TB",
+    "read": "12,400 MB/s",
+    "write": "11,800 MB/s",
+    "score": "96/100",
+    "price": "$599.99",
+    "badgeType": "premium",
+    "badgeText": "PREMIUM",
+    "imageUrl": "https://i.postimg.cc/G4Tt9rNq/image5.jpg"
   }
 ]
