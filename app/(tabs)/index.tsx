@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   StatusBar,
@@ -9,8 +9,8 @@ import {
   View,
   ScrollView,
   Image,
+  ActivityIndicator,
 } from "react-native";
-import productsData from "../../constants/products.json";
 
 const Colors = {
   primary: '#3B82F6', // Blue color used in the design
@@ -86,7 +86,22 @@ const ProductCard = ({ title, subtitle, capacity, read, write, score, price, bad
 
 export default function HomeScreen() {
   const [activeTag, setActiveTag] = useState('All Drives');
+  const [productsData, setProductsData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const tags = ['All Drives', 'NVMe Gen5', 'NVMe Gen4', 'SATA SSD'];
+
+  useEffect(() => {
+    fetch("https://raw.githubusercontent.com/Arnat-Mueansudjai/MyApp_by_Arnat/refs/heads/master/constants/products.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setProductsData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch products:", err);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -128,21 +143,25 @@ export default function HomeScreen() {
         </ScrollView>
 
         {/* Product Cards */}
-        {productsData.map((product) => (
-          <ProductCard 
-            key={product.id}
-            title={product.title}
-            subtitle={product.subtitle}
-            capacity={product.capacity}
-            read={product.read}
-            write={product.write}
-            score={product.score}
-            price={product.price}
-            badgeType={product.badgeType}
-            badgeText={product.badgeText}
-            imageUrl={product.imageUrl}
-          />
-        ))}
+        {loading ? (
+          <ActivityIndicator size="large" color={Colors.primary} style={{ marginTop: 50 }} />
+        ) : (
+          productsData.map((product) => (
+            <ProductCard 
+              key={product.id}
+              title={product.title}
+              subtitle={product.subtitle}
+              capacity={product.capacity}
+              read={product.read}
+              write={product.write}
+              score={product.score}
+              price={product.price}
+              badgeType={product.badgeType}
+              badgeText={product.badgeText}
+              imageUrl={product.imageUrl}
+            />
+          ))
+        )}
       </ScrollView>
 
       {/* Bottom Navigation */}
